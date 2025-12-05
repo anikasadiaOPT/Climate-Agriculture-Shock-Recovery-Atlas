@@ -1,53 +1,105 @@
-﻿# Climate Shock-Recovery Atlas for Global Agriculture 
+# Climate-Agriculture Shock–Recovery Atlas: A 33-Year Spatio-Temporal Analysis of Global Agricultural Resilience Using ECMWF and FAOSTAT Data
 
 
-```markdown
-## Data collection
+Short description
+This repository contains code and workflows used to build the Climate Shock–Recovery Atlas for global agriculture. The atlas links country-level crop production data (FAOSTAT) with gridded climate predictors (ECMWF ERA5 / ERA5‑Land), implements preprocessing and quality checks, and produces cleaned datasets and indicators used in modelling shock and recovery dynamics.
 
-Sources
-- FAOSTAT — country-level crop statistics (production, area, yield).[https://www.fao.org/faostat/en/#data/QCL]
-- ECMWF (ERA5 / ERA5‑Land) — gridded climate predictors (temperature, precipitation, soil moisture, radiation), aggregated to monthly/seasonal.
-- The variables from ECMWF are t2m, tcc, tp, ssr, si10. Here are the variable details below-
-    TP — Total Precipitation
+Key features
+- Reproducible data-processing pipelines for harmonizing FAOSTAT and ERA5-derived predictors.
+- Scripts to aggregate gridded climate data to countries (area-weighted) and compute seasonal predictors.
+- Cleaned, documented output tables ready for modeling and visualization.
 
-Amount of all precipitation (rain + snow + hail) accumulated over a time period.
+Table of contents
+- Project status
+- Quick start
+- Data sources & licensing
+- Folder structure
+- Processing overview
+- How to cite
+- Contributing
+- License & data license
 
-Usually in meters or millimeters.
+Project status
+- Data collection and preprocessing: implemented (scripts in /scripts)
+- Processed datasets stored in: /data (keep sensitive or proprietary outputs out of the public repo)
+- Analysis & visualization scripts: in /notebooks and /src (if present)
 
-T2M — 2-Meter Temperature
+Quick start
+1. Clone:
+   git clone https://github.com/anikasadiaOPT/Climate-Shock-Recovery-Atlas-for-Global-Agriculture-.git
+2. Create a Python environment:
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+3. Data access:
+   - FAOSTAT: download country-level crop tables (see Data sources & licensing below).
+   - ERA5/ERA5‑Land: obtain via Copernicus Climate Data Store (CDS) API or ECMWF resources (see Data sources & licensing).
+   Place raw downloads under data/raw/ following the README in /data or the scripts' configuration.
 
-Air temperature measured (or modeled) 2 meters above ground.
+Data sources & licensing (important)
+This project uses third-party data with their own licenses and attribution requirements. You must read and comply with those licenses before re-using or redistributing the raw or derived datasets.
 
-Same as standard “surface air temperature.”
+- FAOSTAT (Food and Agriculture Organization of the United Nations)
+  - Website: https://www.fao.org/faostat/en/#data/QCL
+  - Citation and terms: Follow FAO/FAOSTAT citation and attribution policies. See DATA_LICENSE.md for recommended citation text and redistribution guidance.
 
-TCC — Total Cloud Cover
+- ERA5 / ERA5‑Land (ECMWF / Copernicus)
+  - Website: https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation and https://cds.climate.copernicus.eu
+  - Citation: Cite the Copernicus Climate Change Service (C3S) and the ERA5 dataset per the ECMWF guidance. See DATA_LICENSE.md for recommended citation lines and references.
 
-Fraction of the sky covered by clouds.
+Processed data and code licensing
+- Code and repository materials are released under the MIT License (see LICENSE).
+- Processed/derived datasets produced by these scripts may still be bound by the original data providers' terms — check DATA_LICENSE.md and the original providers. Where applicable, include provider attribution and license statements alongside any redistributed derivative data.
 
-Often given as 0–1 (0 = clear, 1 = fully cloudy) or in %.
+Folder structure (recommended)
+- data/
+  - raw/                # raw downloads (not committed)
+  - processed/          # cleaned and harmonized tables (optionally committed)
+- scripts/              # data processing scripts (ingestion, cleaning, aggregation)
+- notebooks/            # exploratory analyses and visualization
+- src/                  # code modules used by scripts/notebooks
+- docs/                 # documentation and figures
+- LICENSE
+- DATA_LICENSE.md
+- CITATION.cff
+- README.md
+- CONTRIBUTING.md
+- CODE_OF_CONDUCT.md
 
-SI10 — 10-Meter Wind Speed
+Processing overview (high level)
+1. Download raw FAOSTAT country-level crop tables and ERA5/ERA5-Land variables (t2m, tcc, tp, ssr, si10).
+2. Harmonize country identifiers (ISO3), crop names, and year ranges.
+3. Reproject and aggregate ERA5 to country polygons (area-weighted) and compute seasonal statistics (e.g., growing-season mean t2m, cumulative tp).
+4. Quality checks: range checks, missingness reports, and minimal imputation where justified (documented in scripts).
+5. Store cleaned tables in data/processed with provenance metadata (source URLs, query details, processing date).
 
-Horizontal wind speed at 10 meters above ground.
+Provenance & reproducibility
+- Keep raw downloads outside version control (data/raw).
+- Log exact download queries, API calls, and parameter selections in scripts and in per-run metadata files saved to data/processed/provenance/.
+- If you publish processed datasets, include:
+  - link to original data provider(s),
+  - citation text,
+  - date of download,
+  - scripts and exact commit hash used to generate the artifact.
 
-Measured in m/s.
+How to cite
+Preferred citation for the repository (see CITATION.cff):
+- Please cite this repository and the relevant FAO and ECMWF/ERA5 sources per their recommended citation text. See DATA_LICENSE.md for exact lines.
 
-SSR — Surface Solar Radiation (Downwards)
+Contributing
+See CONTRIBUTING.md for the contribution process, coding style, and tests.
 
-Amount of shortwave (solar) radiation reaching the Earth’s surface.
+Code of conduct
+This project follows the Contributor Covenant Code of Conduct. See CODE_OF_CONDUCT.md.
 
-Measured in J/m² or W/m².
-Key processing (short)
-- Harmonize country IDs and years; convert units.
-- Aggregate ERA5 to countries (area‑weighted) and compute seasonal predictors(e.g., growing‑season mean temperature, cumulative precipitation).
-- Run basic quality checks and minimal imputation; store cleaned tables for modelling.
+Contact
+Repo owner: anikasadiaOPT
+For questions about data access or licensing, please open an issue.
 
-Important
-- Processed data, exact download queries, and preprocessing scripts are in /data and /scripts (provenance logged).
-- Always cite FAOSTAT and ECMWF/ERA5 and follow their licensing/attribution.
-```
+Acknowledgements
+- FAO/FAOSTAT for country-level agricultural statistics.
+- ECMWF / Copernicus for ERA5 and ERA5-Land reanalysis datasets.
 
-
-
-
-
+License
+- Code: MIT (see LICENSE)
+- Data: subject to provider licenses — see DATA_LICENSE.md for details.
