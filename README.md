@@ -52,22 +52,20 @@ This project uses third-party data with their own licenses and attribution requi
 
 Processed data and code licensing
 - Code and repository materials are released under the MIT License (see LICENSE).
-- Processed/derived datasets produced by these scripts may still be bound by the original data providers' terms — check DATA_LICENSE.md and the original providers. Where applicable, include provider attribution and license statements alongside any redistributed derivative data.
+- The original data providers' terms may still bind processed/derived datasets produced by these scripts — check DATA_LICENSE.md and the original providers. Where applicable, include provider attribution and license statements alongside any redistributed derivative data.
 
 Folder structure (recommended)
-- data/
-  - raw/                # raw downloads (not committed)
-  - processed/          # cleaned and harmonized tables (optionally committed)
-- scripts/              # data processing scripts (ingestion, cleaning, aggregation)
-- notebooks/            # exploratory analyses and visualization
-- src/                  # code modules used by scripts/notebooks
-- docs/                 # documentation and figures
-- LICENSE
-- DATA_LICENSE.md
-- CITATION.cff
-- README.md
-- CONTRIBUTING.md
-- CODE_OF_CONDUCT.md
+```md
+📁 data/
+ ├── 📁 raw/  
+ ├── 📁 processed/  
+📁 scripts/  
+📁 notebooks/  
+📁 src/  
+📁 docs/  
+📄 LICENSE  
+📄 README.md
+```
 
 Processing overview (high level)
 1. Download raw FAOSTAT country-level crop tables and ERA5/ERA5-Land variables (t2m, tcc, tp, ssr, si10).
@@ -106,6 +104,7 @@ Acknowledgements
 License
 - Code: MIT (see LICENSE)
 - Data: subject to provider licenses — see DATA_LICENSE.md for details.
+
 
 
 
